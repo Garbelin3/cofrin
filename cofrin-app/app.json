@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "cofrin-app",
+    "slug": "cofrin-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "firebaseApiKey": "AIzaSyB9JT13NkP8AExnxtwLkJ-T1Ncl-Mmer0M",
+      "firebaseAuthDomain": "cofrin-940ab.firebaseapp.com",
+      "firebaseProjectId": "cofrin-940ab",
+      "firebaseStorageBucket": "cofrin-940ab.firebasestorage.app",
+      "firebaseMessagingSenderId": "342873178619",
+      "firebaseAppId": "1:342873178619:web:1e45b26f91a7bca8a6cb5e",
+      "firebaseMeasurementId": "G-6H0CMWGWKD"
+    }
+  }
+}
