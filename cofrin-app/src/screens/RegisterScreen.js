@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Icon from 'react-native-vector-icons/Feather';
 import {
     View,
     Text,
@@ -24,6 +25,10 @@ const RegisterScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
+
+    // new states to control visibility of password fields
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const formatCPF = (text) => {
         // Remove tudo que não é dígito
@@ -231,33 +236,71 @@ const RegisterScreen = ({ navigation }) => {
                                 keyboardType="email-address"
                             />
 
-                            <TextInput
-                                style={[styles.input, {
-                                    backgroundColor: colors.surface,
-                                    borderColor: colors.border,
-                                    color: colors.text
-                                }]}
-                                placeholder="Senha"
-                                placeholderTextColor={colors.textMuted}
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry
-                                autoCapitalize="none"
-                            />
+                            {/* Senha com botão de olho */}
+                            <View style={styles.passwordContainer}>
+                                <TextInput
+                                    style={[styles.input, {
+                                        backgroundColor: colors.surface,
+                                        borderColor: colors.border,
+                                        color: colors.text,
+                                        paddingRight: 48
+                                    }]}
+                                    placeholder="Senha"
+                                    placeholderTextColor={colors.textMuted}
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    secureTextEntry={!showPassword}
+                                    autoCapitalize="none"
+                                />
+                                <TouchableOpacity
+                                    onPress={() => setShowPassword(s => !s)}
+                                    style={styles.iconButton}
+                                    accessibilityRole="button"
+                                    accessibilityLabel={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                                    accessibilityState={{ pressed: showPassword }}
+                                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                                >
+                                    <Icon
+                                        name={showPassword ? 'eye-off' : 'eye'}
+                                        size={20}
+                                        color={colors.textMuted}
+                                        accessible={false}
+                                    />
+                                </TouchableOpacity>
+                            </View>
 
-                            <TextInput
-                                style={[styles.input, {
-                                    backgroundColor: colors.surface,
-                                    borderColor: colors.border,
-                                    color: colors.text
-                                }]}
-                                placeholder="Confirmar senha"
-                                placeholderTextColor={colors.textMuted}
-                                value={confirmPassword}
-                                onChangeText={setConfirmPassword}
-                                secureTextEntry
-                                autoCapitalize="none"
-                            />
+                            {/* Confirmar senha com botão de olho */}
+                            <View style={styles.passwordContainer}>
+                                <TextInput
+                                    style={[styles.input, {
+                                        backgroundColor: colors.surface,
+                                        borderColor: colors.border,
+                                        color: colors.text,
+                                        paddingRight: 48
+                                    }]}
+                                    placeholder="Confirmar senha"
+                                    placeholderTextColor={colors.textMuted}
+                                    value={confirmPassword}
+                                    onChangeText={setConfirmPassword}
+                                    secureTextEntry={!showConfirmPassword}
+                                    autoCapitalize="none"
+                                />
+                                <TouchableOpacity
+                                    onPress={() => setShowConfirmPassword(s => !s)}
+                                    style={styles.iconButton}
+                                    accessibilityRole="button"
+                                    accessibilityLabel={showConfirmPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                                    accessibilityState={{ pressed: showConfirmPassword }}
+                                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                                >
+                                    <Icon
+                                        name={showConfirmPassword ? 'eye-off' : 'eye'}
+                                        size={20}
+                                        color={colors.textMuted}
+                                        accessible={false}
+                                    />
+                                </TouchableOpacity>
+                            </View>
 
                             <TouchableOpacity
                                 style={[
@@ -329,6 +372,23 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderWidth: 1,
         fontWeight: '500',
+    },
+    // estilos adicionados para suporte ao ícone de olho
+    passwordContainer: {
+        position: 'relative',
+    },
+    iconButton: {
+        position: 'absolute',
+        right: 8,
+        top: 12,
+        height: 36,
+        width: 36,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+    },
+    iconText: {
+        fontSize: 18,
     },
     button: {
         borderRadius: 12,

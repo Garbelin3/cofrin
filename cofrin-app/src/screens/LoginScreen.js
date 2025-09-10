@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Icon from 'react-native-vector-icons/Feather';
 import {
     View,
     Text,
@@ -22,6 +23,7 @@ const LoginScreen = ({ navigation, onLoginSuccess }) => {
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         // Testar conexão com Firebase quando a tela carregar
@@ -39,6 +41,8 @@ const LoginScreen = ({ navigation, onLoginSuccess }) => {
             Alert.alert('Usuários Cadastrados', 'Nenhum usuário encontrado no sistema.');
         }
     };
+
+    const toggleShowPassword = () => setShowPassword(s => !s);
 
     const handleLogin = async () => {
         console.log('=== INICIANDO PROCESSO DE LOGIN ===');
@@ -149,21 +153,47 @@ const LoginScreen = ({ navigation, onLoginSuccess }) => {
                                 onChangeText={setIdentifier}
                                 autoCapitalize="none"
                                 keyboardType="email-address"
+                                returnKeyType="next"
+                                importantForAutofill="yes"
+                                textContentType="username"
                             />
 
-                            <TextInput
-                                style={[styles.input, {
-                                    backgroundColor: colors.surface,
-                                    borderColor: colors.border,
-                                    color: colors.text
-                                }]}
-                                placeholder="Senha"
-                                placeholderTextColor={colors.textMuted}
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry
-                                autoCapitalize="none"
-                            />
+                            <View style={styles.passwordContainer}>
+                                <TextInput
+                                    style={[styles.input, {
+                                        backgroundColor: colors.surface,
+                                        borderColor: colors.border,
+                                        color: colors.text,
+                                        paddingRight: 48
+                                    }]}
+                                    placeholder="Senha"
+                                    placeholderTextColor={colors.textMuted}
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    secureTextEntry={!showPassword}
+                                    autoCapitalize="none"
+                                    returnKeyType="done"
+                                    importantForAutofill="yes"
+                                    textContentType="password"
+                                    accessibilityLabel="Campo senha"
+                                />
+
+                                <TouchableOpacity
+                                    onPress={toggleShowPassword}
+                                    style={styles.iconButton}
+                                    accessibilityRole="button"
+                                    accessibilityLabel={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                                    accessibilityState={{ pressed: showPassword }}
+                                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                                >
+                                    <Icon
+                                        name={showPassword ? 'eye-off' : 'eye'}
+                                        size={20}
+                                        color={colors.textMuted}
+                                        accessible={false}
+                                    />
+                                </TouchableOpacity>
+                            </View>
 
                             <TouchableOpacity
                                 style={[
@@ -245,6 +275,22 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderWidth: 1,
         fontWeight: '500',
+    },
+    passwordContainer: {
+        position: 'relative',
+    },
+    iconButton: {
+        position: 'absolute',
+        right: 8,
+        top: 12,
+        height: 36,
+        width: 36,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+    },
+    iconText: {
+        fontSize: 18,
     },
     button: {
         borderRadius: 12,

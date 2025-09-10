@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@react-navigation/bottom-tabs": "^7.4.6"
+    "@react-navigation/bottom-tabs": "^7.4.6",
+    "react-icons": "^5.5.0"
   }
 }
